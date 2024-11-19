@@ -3,7 +3,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Auth — DevOverflow",
+  title: "Auth — skillconnect",
 };
 
 export default function AuthLayout({
