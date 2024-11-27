@@ -19,6 +19,7 @@ import { HomePageFilters } from "@/constants/filters";
 
 import type { SearchParamsProps } from "@/types";
 import type { Metadata } from "next";
+import AdminLogin from "./adminlogin";
 
 export const metadata: Metadata = {
   title: "Home — skillconnect",
@@ -114,6 +115,9 @@ export default async function Home({ searchParams }: SearchParamsProps) {
           isNext={result.isNext}
         />
       </div>
+      <h3>
+        <AdminLogin />
+      </h3>
     </>
   );
 }
