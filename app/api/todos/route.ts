@@ -9,13 +9,13 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const { task } = await req.json();
-  if (!task) {
-    return NextResponse.json({ error: "Task is required" }, { status: 400 });
+  const { name, title, desc } = await req.json();
+  if (!name && !title && !desc) {
+    return NextResponse.json({ error: "name is required" }, { status: 400 });
   }
 
   await connectToDatabase();
-  const newTodo = new Todo({ task });
+  const newTodo = new Todo({ name, title, desc });
   await newTodo.save();
   return NextResponse.json(newTodo);
 }
@@ -24,21 +24,25 @@ export async function DELETE(req: Request) {
   const { id } = await req.json();
   await connectToDatabase();
   await Todo.findByIdAndDelete(id);
-  return NextResponse.json({ message: "Task deleted" });
+  return NextResponse.json({ message: "name deleted" });
 }
 
 export async function PUT(req: Request) {
-  const { id, task } = await req.json();
+  const { id, name, title, desc } = await req.json();
 
-  if (!id || !task) {
+  if (!id || !name || !title || !desc) {
     return NextResponse.json(
-      { error: "ID and task are required" },
+      { error: "ID and name are required" },
       { status: 400 }
     );
   }
 
   await connectToDatabase();
-  const updatedTodo = await Todo.findByIdAndUpdate(id, { task }, { new: true });
+  const updatedTodo = await Todo.findByIdAndUpdate(
+    id,
+    { name, title, desc },
+    { new: true }
+  );
 
   if (!updatedTodo) {
     return NextResponse.json({ error: "Todo not found" }, { status: 404 });
