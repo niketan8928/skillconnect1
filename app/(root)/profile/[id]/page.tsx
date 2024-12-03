@@ -79,6 +79,10 @@ const Page = async ({ params, searchParams }: URLProps) => {
             )}
           </div>
         </div>
+        <div>
+          <p>followers :{userInfo.user.followersCount}</p>
+          <p>following :{userInfo.user.followingCount}</p>
+        </div>
 
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
           <SignedIn>
@@ -134,3 +138,13 @@ const Page = async ({ params, searchParams }: URLProps) => {
 };
 
 export default Page;
+export const getLoggedInUserDetails = async () => {
+  const { userId: clerkId } = auth();
+  if (!clerkId) return null;
+
+  const userInfo = await getUserInfo({ userId: clerkId });
+  return {
+    userId: userInfo.user._id,
+    name: userInfo.user.name,
+  };
+};
